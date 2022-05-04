@@ -35,12 +35,12 @@ let busca = prompt("¿Cuál es tu oficio? guerrero, paladin o peleador");
 
 let character = oficio.find((item) => item.off == busca.toUpperCase());
 
-/*if (busca == oficio.off) {
+if (busca == undefined) {
   alert("verdadero");
 } else {
   alert("falso");
 }
-*/
+
 document.write(
   "<h1>Tu oficio es: " +
     character.off +
