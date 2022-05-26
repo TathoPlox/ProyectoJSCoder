@@ -82,7 +82,12 @@ function crear__pj() {
 
 function make__raza() {
   if (!document.querySelector('input[name="raza"]:checked')) {
-    alert("No seleccionaste ninguna raza");
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "No seleccionaste ninguna raza",
+      footer: "Es necesario elegir una",
+    });
   } else {
     document.getElementById("raza").style.display = "none";
     document.getElementById("oficio").style.display = "block";
@@ -99,7 +104,12 @@ function volver__raza() {
 
 function make__off() {
   if (!document.querySelector('input[name="off"]:checked')) {
-    alert("No seleccionaste ningun oficio");
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "No seleccionaste ningun oficio",
+      footer: "Es necesario elegir uno",
+    });
   } else {
     document.getElementById("oficio").style.display = "none";
     document.getElementById("character").style.display = "block";
@@ -126,7 +136,12 @@ function archivos(event) {
 
 function make__pj() {
   if (document.getElementById("nickname").value == "") {
-    alert("Necesitas un nombre y una foto");
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Necesitas un nombre y una foto",
+      footer: "Escribe el nombre de tu personaje",
+    });
   } else {
     document.getElementById("create").style.display = "none";
     document.getElementById("character").style.display = "none";
@@ -144,6 +159,16 @@ function make__pj() {
       document.getElementById("nickname").value;
     listapj.appendChild(nuevopj);
     pj.push(new Pj(razacreado, oficiocreado, nickcreado, fotocreado));
-    console.log(Pj);
+    console.log(pj);
+    function guardarpj(pj) {
+      localStorage.setItem("pj", JSON.stringify(pj));
+    }
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Personaje Creado",
+      showConfirmButton: false,
+      timer: 900,
+    });
   }
 }
