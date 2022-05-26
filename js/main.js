@@ -68,6 +68,12 @@ window.onload = function () {
   document.getElementById("pjcreado").onclick = make__pj;
 };
 
+class Pj {
+  constructor(raza, offi, nick, foto) {}
+}
+
+const pj = [];
+
 function crear__pj() {
   document.getElementById("lista").style.display = "none";
   document.getElementById("create").style.display = "block";
@@ -80,7 +86,6 @@ function make__raza() {
   } else {
     document.getElementById("raza").style.display = "none";
     document.getElementById("oficio").style.display = "block";
-    var razacreado = document.querySelector('input[name="raza"]:checked').value;
   }
 }
 
@@ -98,9 +103,6 @@ function make__off() {
   } else {
     document.getElementById("oficio").style.display = "none";
     document.getElementById("character").style.display = "block";
-    var oficiocreado = document.querySelector(
-      'input[name="off"]:checked'
-    ).value;
   }
 }
 
@@ -129,9 +131,19 @@ function make__pj() {
     document.getElementById("create").style.display = "none";
     document.getElementById("character").style.display = "none";
     document.getElementById("lista").style.display = "block";
+    var fotocreado = document.getElementById("imagenavatar").src;
+    var nickcreado = document.getElementById("nickname").value;
+    var razacreado = document.querySelector('input[name="raza"]:checked').value;
+    var oficiocreado = document.querySelector(
+      'input[name="off"]:checked'
+    ).value;
     nuevopj.innerHTML =
-      document.getElementById("imagenavatar") +
+      '<img id="imagenavatar" class="rounded-circle" src="' +
+      fotocreado +
+      '" alt="" />' +
       document.getElementById("nickname").value;
     listapj.appendChild(nuevopj);
+    pj.push(new Pj(razacreado, oficiocreado, nickcreado, fotocreado));
+    console.log(Pj);
   }
 }
