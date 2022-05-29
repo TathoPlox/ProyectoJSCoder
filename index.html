@@ -18,17 +18,16 @@
       <div id="lista">
         <h1 class="">Personajes</h1>
         <div class="row d-flex align-items-center flex-column">
-          <h2>0/3</h2>
+          <h2><span id="conteo">0</span>/3</h2>
           <div>
-            <ul id="listapersonajes">
-              <li><input type="button" id="crear" value="Crear" /></li>
-            </ul>
+            <ul id="listapersonajes"></ul>
+            <input type="button" id="crear" value="Crear" />
           </div>
         </div>
       </div>
 
       <div id="create">
-        <form name="newpj">
+        <form name="newpj" id="newpj">
           <h1>Nuevo Personaje</h1>
           <div>
             <div id="raza">
@@ -173,11 +172,13 @@
               <br />
               <input type="file" name="foto" id="fotoavatar" />
               <br />
-              <img id="imagenavatar" class="rounded-circle" src="" alt="" />
+              <div class="ancho rounded-circle">
+                <img id="imagenavatar" class="fotopj" src="" alt="" />
+              </div>
               <br />
               <br />
               <input type="button" id="volver__off" value="Volver" />
-              <input type="button" id="pjcreado" value="Terminar" />
+              <input type="submit" id="pjcreado" value="Terminar" />
             </div>
           </div>
         </form>

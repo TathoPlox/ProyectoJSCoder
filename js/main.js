@@ -69,7 +69,12 @@ window.onload = function () {
 };
 
 class Pj {
-  constructor(raza, offi, nick, foto) {}
+  constructor(raza, offi, nick, foto) {
+    (this.raza = raza),
+      (this.offi = offi),
+      (this.nick = nick),
+      (this.foto = foto);
+  }
 }
 
 const pj = [];
@@ -93,9 +98,6 @@ function make__raza() {
     document.getElementById("oficio").style.display = "block";
   }
 }
-
-const listapj = document.getElementById("listapersonajes");
-const nuevopj = document.createElement("li");
 
 function volver__raza() {
   document.getElementById("raza").style.display = "block";
@@ -134,6 +136,48 @@ function archivos(event) {
   leer.readAsDataURL(foto);
 }
 
+function guardarpj(pj) {
+  localStorage.setItem("pj", JSON.stringify(pj));
+}
+
+const form = document.getElementById("newpj");
+
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+  form.reset();
+});
+
+const listapj = document.getElementById("listapersonajes");
+
+const fragment = document.createDocumentFragment();
+
+var conteopj = document.getElementById("conteo");
+
+function cargarpj() {
+  for (const i of pj) {
+    let nuevopj = document.createElement("li");
+    nuevopj.innerHTML =
+      '<div class="ancho rounded-circle"><img id="" class="fotopj" src="' +
+      i.foto +
+      '" alt="" /></div>' +
+      i.nick;
+    fragment.appendChild(nuevopj);
+    conteopj.innerText = pj.length;
+
+    listapj.appendChild(fragment);
+  }
+}
+
+function borrarlista() {
+  let x = listapj.querySelector("li");
+  if (x < pj) {
+    while (listapj.firstChild) {
+      listapj.removeChild(listapj.firstChild);
+    }
+    console.log(listapj.children.length);
+  }
+}
+
 function make__pj() {
   if (document.getElementById("nickname").value == "") {
     Swal.fire({
@@ -152,17 +196,12 @@ function make__pj() {
     var oficiocreado = document.querySelector(
       'input[name="off"]:checked'
     ).value;
-    nuevopj.innerHTML =
-      '<img id="imagenavatar" class="rounded-circle" src="' +
-      fotocreado +
-      '" alt="" />' +
-      document.getElementById("nickname").value;
-    listapj.appendChild(nuevopj);
     pj.push(new Pj(razacreado, oficiocreado, nickcreado, fotocreado));
     console.log(pj);
-    function guardarpj(pj) {
-      localStorage.setItem("pj", JSON.stringify(pj));
-    }
+    borrarlista();
+    cargarpj();
+    guardarpj;
+    document.getElementById("imagenavatar").src = "";
     Swal.fire({
       position: "top-end",
       icon: "success",

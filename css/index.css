@@ -4,6 +4,19 @@
   display: none;
 }
 
-#imagenavatar {
+.fotopj {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  height: 100%;
+}
+
+.ancho {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 150px;
   height: 150px;
+  background-color: aqua;
 }
