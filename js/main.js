@@ -16,46 +16,6 @@ for (let i = 1; i <= dados; i++) {
 }
 */
 
-/*
-class Oficio {
-  constructor(off, dmg, def, agi) {
-    this.off = off.toUpperCase();
-    this.dmg = parseFloat(dmg);
-    this.def = parseFloat(def);
-    this.agi = parseFloat(agi);
-  }
-}
-
-const oficio = [];
-
-oficio.push(new Oficio("guerrero", 6, 2, 2));
-oficio.push(new Oficio("paladin", 5, 4, 1));
-oficio.push(new Oficio("peleador", 6, 1, 3));
-
-let busca = prompt("¿Cuál es tu oficio? guerrero, paladin o peleador");
-
-let character = oficio.find((item) => item.off == busca.toUpperCase());
-
-if (busca == oficio.off) {
-  alert("verdadero");
-} else {
-  alert("falso");
-}
-
-document.write(
-  "<h1>Tu oficio es: " +
-    character.off +
-    "</h1>" +
-    "<p> Daño: " +
-    character.dmg +
-    "<br> Defensa: " +
-    character.def +
-    "<br> Agilidad: " +
-    character.agi +
-    "</p>"
-);
-*/
-
 window.onload = function () {
   document.getElementById("crear").onclick = crear__pj;
   document.getElementById("check__raza").onclick = make__raza;
@@ -66,6 +26,8 @@ window.onload = function () {
     .getElementById("fotoavatar")
     .addEventListener("change", archivos, false);
   document.getElementById("pjcreado").onclick = make__pj;
+  cargarpj();
+  fetchprueba();
 };
 
 class Pj {
@@ -77,7 +39,7 @@ class Pj {
   }
 }
 
-const pj = [];
+const pj = JSON.parse(localStorage.getItem("pj")) || [];
 
 function crear__pj() {
   document.getElementById("lista").style.display = "none";
@@ -136,10 +98,6 @@ function archivos(event) {
   leer.readAsDataURL(foto);
 }
 
-function guardarpj(pj) {
-  localStorage.setItem("pj", JSON.stringify(pj));
-}
-
 const form = document.getElementById("newpj");
 
 form.addEventListener("submit", function (event) {
@@ -163,8 +121,11 @@ function cargarpj() {
       i.nick;
     fragment.appendChild(nuevopj);
     conteopj.innerText = pj.length;
-
     listapj.appendChild(fragment);
+    fetchprueba();
+  }
+  if (pj.length == 3) {
+    document.getElementById("crear").style.display = "none";
   }
 }
 
@@ -190,17 +151,18 @@ function make__pj() {
     document.getElementById("create").style.display = "none";
     document.getElementById("character").style.display = "none";
     document.getElementById("lista").style.display = "block";
-    var fotocreado = document.getElementById("imagenavatar").src;
-    var nickcreado = document.getElementById("nickname").value;
-    var razacreado = document.querySelector('input[name="raza"]:checked').value;
-    var oficiocreado = document.querySelector(
-      'input[name="off"]:checked'
-    ).value;
-    pj.push(new Pj(razacreado, oficiocreado, nickcreado, fotocreado));
+    pj.push(
+      new Pj(
+        document.querySelector('input[name="raza"]:checked').value,
+        document.querySelector('input[name="off"]:checked').value,
+        document.getElementById("nickname").value,
+        document.getElementById("imagenavatar").src
+      )
+    );
     console.log(pj);
+    localStorage.setItem("pj", JSON.stringify(pj));
     borrarlista();
     cargarpj();
-    guardarpj;
     document.getElementById("imagenavatar").src = "";
     Swal.fire({
       position: "top-end",
@@ -210,4 +172,15 @@ function make__pj() {
       timer: 900,
     });
   }
+}
+const $pokemon = document.querySelector("#pokemon");
+function renderPokemon(image) {
+  $pokemon.setAttribute("src", image);
+}
+function fetchprueba() {
+  fetch("https://pokeapi.co/api/v2/pokemon/" + 25 + pj.length + "/")
+    .then((response) => response.json())
+    .then((pokemon) => {
+      renderPokemon(pokemon.sprites.front_default);
+    });
 }
